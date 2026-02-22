@@ -1,4 +1,4 @@
-# table-craft
+# react-table-craft
 
 A production-ready, framework-agnostic React data table system built on [TanStack Table](https://tanstack.com/table). Fully typed, tree-shakeable, and feature-rich.
 
@@ -24,7 +24,11 @@ A production-ready, framework-agnostic React data table system built on [TanStac
 ## Installation
 
 ```bash
-npm install table-craft
+npm install react-table-craft
+# or
+pnpm add react-table-craft
+# or
+yarn add react-table-craft
 ```
 
 ### Peer Dependencies
@@ -35,14 +39,14 @@ npm install react react-dom
 
 ### Tailwind CSS
 
-table-craft uses Tailwind CSS classes for styling. You must have Tailwind CSS configured in your project. Add the package to your Tailwind content paths:
+react-table-craft uses Tailwind CSS classes for styling. You must have Tailwind CSS configured in your project. Add the package to your Tailwind content paths:
 
 ```js
 // tailwind.config.js
 module.exports = {
   content: [
     // ... your paths
-    './node_modules/table-craft/dist/**/*.{js,mjs}',
+    './node_modules/react-table-craft/dist/**/*.{js,mjs}',
   ],
 }
 ```
@@ -50,7 +54,7 @@ module.exports = {
 ## Quick Start
 
 ```tsx
-import { DataTable } from 'table-craft'
+import { DataTable } from 'react-table-craft'
 import type { ColumnDef } from '@tanstack/react-table'
 
 interface User {
@@ -80,7 +84,7 @@ function UsersTable({ data }: { data: User[] }) {
 For simpler use cases with client-side pagination, sorting, and filtering:
 
 ```tsx
-import { ClientSideTable } from 'table-craft'
+import { ClientSideTable } from 'react-table-craft'
 
 function UsersTable({ data }: { data: User[] }) {
   return (
@@ -110,7 +114,7 @@ function UsersTable({ data }: { data: User[] }) {
 Wrap your app (or a subtree) with `TableProvider` to set global defaults:
 
 ```tsx
-import { TableProvider, createTableConfig } from 'table-craft'
+import { TableProvider, createTableConfig } from 'react-table-craft'
 
 const config = createTableConfig({
   features: {
@@ -159,14 +163,14 @@ Configuration is resolved in this order (later layers override earlier ones):
 
 ## Router Adapter
 
-table-craft does not depend on any specific router. To enable URL-synced pagination, sorting, and filtering, provide a router adapter:
+react-table-craft does not depend on any specific router. To enable URL-synced pagination, sorting, and filtering, provide a router adapter:
 
 ### Next.js (App Router)
 
 ```tsx
 'use client'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { TableProvider, createTableConfig } from 'table-craft'
+import { TableProvider, createTableConfig } from 'react-table-craft'
 
 function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -190,7 +194,7 @@ function Providers({ children }: { children: React.ReactNode }) {
 
 ```tsx
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom'
-import { TableProvider, createTableConfig } from 'table-craft'
+import { TableProvider, createTableConfig } from 'react-table-craft'
 
 function Providers({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate()
@@ -218,7 +222,7 @@ If no router adapter is provided, URL sync is silently disabled. Pagination, sor
 
 ### Built-in English
 
-By default, table-craft uses built-in English strings. No configuration needed.
+By default, react-table-craft uses built-in English strings. No configuration needed.
 
 ### Custom Translations
 
@@ -287,7 +291,7 @@ Components automatically adjust padding, alignment, and icon positioning for RTL
 Extend table behavior with plugins:
 
 ```tsx
-import type { TablePlugin } from 'table-craft'
+import type { TablePlugin } from 'react-table-craft'
 
 const auditPlugin: TablePlugin = {
   name: 'audit-logging',
@@ -361,12 +365,12 @@ import type {
   BackendPagination,
   PaginationMeta,
   PaginationLinks,
-} from 'table-craft'
+} from 'react-table-craft'
 ```
 
 ## TypeScript
 
-table-craft is written in TypeScript and ships type declarations. All components are generic:
+react-table-craft is written in TypeScript and ships type declarations. All components are generic:
 
 ```tsx
 // Column definitions are fully typed
