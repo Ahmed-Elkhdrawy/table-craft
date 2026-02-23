@@ -2,7 +2,7 @@
 
 A production-ready, framework-agnostic React data table system built on [TanStack Table](https://tanstack.com/table). Fully typed, tree-shakeable, and feature-rich.
 
-![Project Screenshot](https://gitlab.com/Ahmed-Elkhdrawy/table-craft-docs/-/raw/main/public/brand/thumnail.png?ref_type=heads)
+![Project Screenshot](https://gitlab.com/Ahmed-Elkhdrawy/table-craft-docs/-/raw/main/public/brand/thumnail.png)
 
 ## Features
 
