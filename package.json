@@ -1,6 +1,6 @@
 {
   "name": "react-table-craft",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A production-ready, framework-agnostic React data table system built on TanStack Table. Fully typed, tree-shakeable, and feature-rich.",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
