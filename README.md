@@ -9,7 +9,7 @@ A production-ready, framework-agnostic React data table system built on [TanStac
 - **Framework-Agnostic** — Works with Next.js, React Router, Remix, or any React setup
 - **Full TypeScript Support** — Generics, strict types, and exported type definitions
 - **Tree-Shakeable** — ESM + CJS dual output with `sideEffects: false`
-- **Built-in Pagination** — Client-side and server-side (backend) pagination with URL sync
+- **Built-in Pagination** — Client-side, server-side, and cursor-based pagination with URL sync
 - **Advanced Filtering** — Faceted filters, multi-filters, text search, date range, single-select
 - **Sorting** — Column header sorting with multi-sort support
 - **Column Visibility** — Toggle columns on/off with persistent state
@@ -108,6 +108,42 @@ function UsersTable({ data }: { data: User[] }) {
   )
 }
 ```
+
+## Cursor-Based Pagination
+
+For APIs that use cursor-based pagination (GraphQL Relay, Stripe, etc.):
+
+```tsx
+import { DataTable } from 'react-table-craft'
+import type { CursorPaginationData } from 'react-table-craft'
+
+function UsersTable({ data, pageInfo, fetchMore }) {
+  const cursorPaginationData: CursorPaginationData = {
+    pageInfo: {
+      hasNextPage: pageInfo.hasNextPage,
+      hasPreviousPage: pageInfo.hasPreviousPage,
+      startCursor: pageInfo.startCursor,
+      endCursor: pageInfo.endCursor,
+      totalCount: pageInfo.totalCount, // optional
+    },
+    onNextPage: () => fetchMore({ after: pageInfo.endCursor }),
+    onPreviousPage: () => fetchMore({ before: pageInfo.startCursor }),
+    onPageSizeChange: (size) => fetchMore({ first: size }),
+    pageSize: 10,
+  }
+
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      isCursorPagination={true}
+      cursorPaginationData={cursorPaginationData}
+    />
+  )
+}
+```
+
+This renders only Prev/Next buttons (no numbered pages), an optional total count, and a page size selector.
 
 ## Configuration
 
@@ -367,6 +403,8 @@ import type {
   BackendPagination,
   PaginationMeta,
   PaginationLinks,
+  CursorPaginationInfo,
+  CursorPaginationData,
 } from 'react-table-craft'
 ```
 

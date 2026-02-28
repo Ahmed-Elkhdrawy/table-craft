@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.4
+
+- Add cursor-based pagination support (`isCursorPagination` mode) for APIs like GraphQL Relay and Stripe
+- New `CursorPaginationInfo` and `CursorPaginationData` exported types
+- Renders Prev/Next buttons only (no numbered pages) with optional total count display
+- Page size selector and RTL support included
+- `pageCount` prop is now optional across `DataTable` and `ClientSideTable`
+- Discriminated union types prevent mixing cursor and offset pagination props
+
 ## 0.1.0 (Initial Release)
 
 - Core `DataTable` component with sorting, filtering, pagination
