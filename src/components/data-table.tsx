@@ -48,6 +48,7 @@ import { Card, CardContent } from './ui/card'
 import { Pagination, CursorPaginationData } from '../types/pagination'
 import { SearchX, RotateCcw } from 'lucide-react'
 import { Button } from './ui/button'
+import { ResolvedTableConfigContext } from '../config/context'
 
 type BaseProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
@@ -170,6 +171,7 @@ export function DataTable<TData, TValue>({
   const t = useTableTranslations()
   const resolvedConfig = useResolvedTableConfig(instanceConfig)
   const router = resolvedConfig.router
+
 
   // Resolve prop vs config
   const shouldShowFilter = showFilter ?? resolvedConfig.features.filter
@@ -434,7 +436,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <>
+    <ResolvedTableConfigContext.Provider value={resolvedConfig}>
       {shouldShowFilter ? (
         <>
           <div className="max-md:hidden">
@@ -615,6 +617,6 @@ export function DataTable<TData, TValue>({
           ) : null}
         </Card>
       )}
-    </>
+    </ResolvedTableConfigContext.Provider>
   )
 }

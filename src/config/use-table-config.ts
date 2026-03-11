@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import type { TableConfig } from '../types/table-config'
-import { useGlobalTableConfig } from './context'
+import { useGlobalTableConfig, useResolvedTableConfigContext } from './context'
 
 /**
  * Consumer hook for reading the resolved table config.
@@ -14,7 +14,9 @@ import { useGlobalTableConfig } from './context'
 export function useTableConfig(): TableConfig
 export function useTableConfig<T>(selector: (config: TableConfig) => T): T
 export function useTableConfig<T>(selector?: (config: TableConfig) => T): TableConfig | T {
-  const config = useGlobalTableConfig()
+  const resolvedFromContext = useResolvedTableConfigContext()
+  const gobalConfig = useGlobalTableConfig()
+  const config = resolvedFromContext ?? gobalConfig
 
   return useMemo(() => {
     if (selector) return selector(config)

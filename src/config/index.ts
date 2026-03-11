@@ -1,7 +1,7 @@
 export { DEFAULT_TABLE_CONFIG } from './defaults'
 export { deepMergeConfig } from './merge'
 export { createTableConfig } from './create-config'
-export { TableProvider, useGlobalTableConfig } from './context'
+export { TableProvider, useGlobalTableConfig, useResolvedTableConfigContext } from './context'
 export { useResolvedTableConfig } from './use-resolved-config'
 export { useTableConfig } from './use-table-config'
 

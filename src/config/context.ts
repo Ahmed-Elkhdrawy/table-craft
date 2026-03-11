@@ -7,7 +7,7 @@ import { DEFAULT_TABLE_CONFIG } from './defaults'
 import { deepMergeConfig } from './merge'
 
 const TableConfigContext = createContext<TableConfig | null>(null)
-
+const ResolvedTableConfigContext = createContext<TableConfig | null>(null)
 interface TableProviderProps {
   config: TableConfigInput
   children: ReactNode
@@ -38,3 +38,9 @@ export function useGlobalTableConfig(): TableConfig {
   const context = useContext(TableConfigContext)
   return context ?? DEFAULT_TABLE_CONFIG
 }
+export function useResolvedTableConfigContext(): TableConfig | null {
+  const context = useContext(TableConfigContext)
+  return context ?? null
+}
+
+export { ResolvedTableConfigContext }
