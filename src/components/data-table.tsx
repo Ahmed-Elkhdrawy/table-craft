@@ -49,6 +49,8 @@ import { Pagination, CursorPaginationData } from '../types/pagination'
 import { SearchX, RotateCcw } from 'lucide-react'
 import { Button } from './ui/button'
 import { ResolvedTableConfigContext } from '../config/context'
+import { DataTableCardLoading } from './data-table-card-loading'
+import { Skeleton } from './ui/skeleton'
 
 type BaseProps<TData, TValue> = {
   columns: ColumnDef<TData, TValue>[]
@@ -495,7 +497,11 @@ export function DataTable<TData, TValue>({
       ) : null}
       {viewMode === 'cards' ? (
         <>
-          <DataTableCardView table={table} />
+          {isLoading ? (
+            <DataTableCardLoading columnCount={columns.length} rowCount={pageSize} />
+          ) : (
+            <DataTableCardView table={table} />
+          )}
           {shouldShowPagination ? (
             <Card className="mt-3 overflow-hidden">
               <div className="space-y-2.5">
@@ -549,50 +555,62 @@ export function DataTable<TData, TValue>({
                 ))}
               </TableHeader>
               <TableBody>
-                {table.getRowModel()?.rows?.length ? (
-                  table.getRowModel()?.rows.map((row, rowIndex) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && 'selected'}
-                      aria-rowindex={pageIndex * pageSize + rowIndex + 2}
-                    >
-                      {row.getVisibleCells().map((cell) => (
-                        <TableCell className="max-w-60 text-ellipsis text-nowrap" key={cell.id}>
-                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                        </TableCell>
-                      ))}
-                    </TableRow>
-                  ))
-                ) : (
-                  <TableRow>
-                    <TableCell colSpan={columns.length} className="py-16 text-center">
-                      <div className="flex flex-col items-center gap-3 px-4">
-                        <SearchX className="size-10 text-muted-foreground/50" aria-hidden="true" />
-                        <div className="space-y-1">
-                          <p className="font-semibold">{t('no-records-found')}</p>
-                          <p className="text-balance text-sm text-muted-foreground">{t('no-records-hint')}</p>
-                        </div>
-                        {(table.getState().columnFilters.length > 0 || (isQueryFilter && currentFilters && Object.keys(currentFilters).length > 0)) && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="mt-1 gap-1.5"
-                            onClick={() => {
-                              if (isQueryFilter && onClearFilters) {
-                                onClearFilters()
-                              } else {
-                                table.resetColumnFilters()
-                              }
-                            }}
+                {
+                    isLoading ? (
+                        Array.from({ length: pageSize }).map((_, i) => (
+                            <TableRow key={i} className="hover:bg-transparent">
+                              {Array.from({ length: columns.length }).map((_, j) => (
+                                <TableCell key={j}>
+                                  <Skeleton className="h-6 w-full" />
+                                </TableCell>
+                              ))}
+                            </TableRow>
+                          ))
+                    ) : table.getRowModel()?.rows?.length ? (
+                        table.getRowModel()?.rows.map((row, rowIndex) => (
+                          <TableRow
+                            key={row.id}
+                            data-state={row.getIsSelected() && 'selected'}
+                            aria-rowindex={pageIndex * pageSize + rowIndex + 2}
                           >
-                            <RotateCcw className="size-3.5" aria-hidden="true" />
-                            {t('reset-filters')}
-                          </Button>
-                        )}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                )}
+                            {row.getVisibleCells().map((cell) => (
+                              <TableCell className="max-w-60 text-ellipsis text-nowrap" key={cell.id}>
+                                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                              </TableCell>
+                            ))}
+                          </TableRow>
+                        ))
+                      ) : (
+                        <TableRow>
+                          <TableCell colSpan={columns.length} className="py-16 text-center">
+                            <div className="flex flex-col items-center gap-3 px-4">
+                              <SearchX className="size-10 text-muted-foreground/50" aria-hidden="true" />
+                              <div className="space-y-1">
+                                <p className="font-semibold">{t('no-records-found')}</p>
+                                <p className="text-balance text-sm text-muted-foreground">{t('no-records-hint')}</p>
+                              </div>
+                              {(table.getState().columnFilters.length > 0 || (isQueryFilter && currentFilters && Object.keys(currentFilters).length > 0)) && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="mt-1 gap-1.5"
+                                  onClick={() => {
+                                    if (isQueryFilter && onClearFilters) {
+                                      onClearFilters()
+                                    } else {
+                                      table.resetColumnFilters()
+                                    }
+                                  }}
+                                >
+                                  <RotateCcw className="size-3.5" aria-hidden="true" />
+                                  {t('reset-filters')}
+                                </Button>
+                              )}
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      )
+                }
               </TableBody>
             </Table>
           </CardContent>
