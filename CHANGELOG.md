@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.5
+
+### Bug Fixes
+
+- Fix `useTableConfig()` returning global config instead of fully resolved config inside `<DataTable>` — child components now correctly receive instance-level overrides and plugin config (all 4 layers)
+
+### Features
+
+- Add `ResolvedTableConfigContext` so child components access the resolved config via `useTableConfig()`
+- Add skeleton loading rows for table view when `isLoading` is true
+- Add skeleton loading cards for card view when `isLoading` is true
+
+### Contributors
+
+- @elsieej — original PR with the config resolution fix idea and loading state enhancement
+
 ## 0.1.4
 
 - Add cursor-based pagination support (`isCursorPagination` mode) for APIs like GraphQL Relay and Stripe
