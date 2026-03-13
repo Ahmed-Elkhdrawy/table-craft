@@ -8,6 +8,7 @@ import { deepMergeConfig } from './merge'
 
 const TableConfigContext = createContext<TableConfig | null>(null)
 const ResolvedTableConfigContext = createContext<TableConfig | null>(null)
+
 interface TableProviderProps {
   config: TableConfigInput
   children: ReactNode
@@ -38,9 +39,13 @@ export function useGlobalTableConfig(): TableConfig {
   const context = useContext(TableConfigContext)
   return context ?? DEFAULT_TABLE_CONFIG
 }
+
+/**
+ * Returns the fully resolved config (all 4 layers) when inside a DataTable,
+ * or null if called outside of a DataTable render tree.
+ */
 export function useResolvedTableConfigContext(): TableConfig | null {
-  const context = useContext(TableConfigContext)
-  return context ?? null
+  return useContext(ResolvedTableConfigContext)
 }
 
 export { ResolvedTableConfigContext }

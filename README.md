@@ -431,18 +431,25 @@ const columns: ColumnDef<User>[] = [
 />
 ```
 
-## 🤝 Contributing
+## Loading State
 
-Contributions are welcome! If you have suggestions for improvements or encounter any issues, please open an issue or submit a pull request on the [GitHub repository](https://github.com/Ahmed-Elkhdrawy/table-craft).
+Show skeleton placeholders while data is being fetched:
 
-Steps to Contribute:
+```tsx
+<DataTable
+  columns={columns}
+  data={data}
+  isLoading={isLoading}
+/>
+```
 
-1. Fork the repository. 🍴
-2. Create a new branch for your feature or bugfix. 🌿
-3. Commit your changes. 💾
-4. Push your branch and submit a pull request. 🚀
+When `isLoading` is `true`, the table renders animated skeleton rows (table view) or skeleton cards (card view) matching the current page size. Pagination and toolbar remain interactive.
 
-## 📜 License
+## Contributing
+
+Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md) before submitting a pull request.
+
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
