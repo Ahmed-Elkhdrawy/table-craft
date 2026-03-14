@@ -496,7 +496,7 @@ export function DataTable<TData, TValue>({
       {viewMode === 'cards' ? (
         <>
           {isLoading ? (
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {Array.from({ length: pageSize }).map((_, i) => (
                 <Card key={i}>
                   <CardContent className="space-y-3 p-4">
