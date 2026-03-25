@@ -1,5 +1,10 @@
 # react-table-craft
 
+[![npm version](https://img.shields.io/npm/v/react-table-craft)](https://www.npmjs.com/package/react-table-craft)
+[![license](https://img.shields.io/npm/l/react-table-craft)](LICENSE)
+[![TypeScript](https://img.shields.io/badge/TypeScript-strict-blue)](https://www.typescriptlang.org/)
+[![CI](https://github.com/Ahmed-Elkhdrawy/table-craft/actions/workflows/ci.yml/badge.svg)](https://github.com/Ahmed-Elkhdrawy/table-craft/actions/workflows/ci.yml)
+
 A production-ready, framework-agnostic React data table system built on [TanStack Table](https://tanstack.com/table). Fully typed, tree-shakeable, and feature-rich.
 
 ![Project Screenshot](https://react-table-craft.vercel.app/brand/thumnail.png)
@@ -448,6 +453,15 @@ When `isLoading` is `true`, the table renders animated skeleton rows (table view
 ## Contributing
 
 Contributions are welcome! Please read the [Contributing Guide](CONTRIBUTING.md) before submitting a pull request.
+
+For major features, we use an [RFC process](rfcs/README.md) to discuss design before implementation.
+
+## Community
+
+- [Report a bug](https://github.com/Ahmed-Elkhdrawy/table-craft/issues/new?template=bug_report.md)
+- [Request a feature](https://github.com/Ahmed-Elkhdrawy/table-craft/issues/new?template=feature_request.md)
+- [Read the Code of Conduct](CODE_OF_CONDUCT.md)
+- [Security Policy](SECURITY.md)
 
 ## License
 

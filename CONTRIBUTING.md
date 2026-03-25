@@ -1,97 +1,83 @@
 # Contributing to react-table-craft
 
-Thank you for your interest in contributing to react-table-craft! This guide will help you get started.
+Thanks for your interest in contributing. This guide covers everything you need to get started.
 
-## Getting Started
+## Before You Start
+
+- **Bug fix or small improvement?** Open a PR directly.
+- **New feature or API change?** Open an issue first to discuss the approach.
+- **Major feature, new component, or architectural change?** Write an [RFC](rfcs/README.md).
+
+This keeps everyone aligned and avoids wasted effort.
+
+## Setup
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) >= 18
 - [npm](https://www.npmjs.com/) or [pnpm](https://pnpm.io/)
-- Basic knowledge of React, TypeScript, and TanStack Table
+- Familiarity with React, TypeScript, and TanStack Table
 
-### Setup
-
-1. Fork the repository on GitHub.
-2. Clone your fork locally:
+### Getting started
 
 ```bash
 git clone https://github.com/<your-username>/table-craft.git
 cd table-craft
-```
-
-3. Install dependencies:
-
-```bash
 npm install
+npm run typecheck    # verify everything compiles
+npm run dev          # start dev watcher
 ```
 
-4. Run the type checker to make sure everything compiles:
+## Contribution Types
 
-```bash
-npm run typecheck
-```
+### Bug Fixes
 
-5. Start the dev watcher (rebuilds on file changes):
+1. Confirm the bug exists (check open issues)
+2. Create a branch: `fix/short-description`
+3. Fix it, run `npm run typecheck`, open a PR
+4. Include steps to reproduce in the PR description
 
-```bash
-npm run dev
-```
+### Small Features
 
-## Making Changes
+Small additions that don't change the public API surface (e.g., a new translation key, an internal optimization):
 
-### Branch Naming
+1. Create a branch: `feat/short-description`
+2. Implement, verify types, open a PR
+3. Include a usage example in the PR description if applicable
 
-Create a branch from `main` with a descriptive name:
+### Major Features (RFC required)
 
-```
-fix/config-merging-strategy
-feat/add-virtual-scrolling
-docs/update-router-examples
-```
+New components, hooks, config options, or breaking changes:
 
-Prefixes:
-- `fix/` — Bug fixes
-- `feat/` — New features
-- `docs/` — Documentation changes
-- `refactor/` — Code improvements without behavior changes
-- `test/` — Adding or updating tests
+1. Open an issue describing the problem and proposed solution
+2. Write an RFC using the [template](rfcs/_template.md)
+3. Open a PR titled `rfc: [short title]` for community review
+4. Once the RFC is accepted, implement it in a separate PR
 
-### Code Style
-
-- **TypeScript first** — All code must be written in TypeScript with strict mode. No `any` types in public APIs.
-- **2-space indentation** — Consistent across the entire codebase.
-- **No default exports** — Use named exports only (except where required by external libraries).
-- **Functional components** — React components should be function components with hooks.
-- **Minimal dependencies** — Avoid adding new dependencies unless absolutely necessary. Discuss in the issue first.
-
-### Architecture Guidelines
+## Architecture Rules
 
 react-table-craft uses a 4-layer configuration system:
 
-1. **Defaults** — `DEFAULT_TABLE_CONFIG`
-2. **Provider** — Global config from `TableProvider`
-3. **Instance** — Per-table `config` prop
-4. **Plugins** — Priority-sorted plugin config
+```
+Defaults → Provider → Instance → Plugins
+```
 
-When making changes, respect this layering:
+When contributing, respect this:
 
-- Config changes should flow through `deepMergeConfig`.
-- Child components should read config via `useTableConfig()`, not by drilling props.
-- New features should be controllable via `TableFeatureFlags` when appropriate.
-- Public API changes require discussion — open an issue first.
+- **Config flows through `deepMergeConfig`** — don't bypass the merge system.
+- **Components read config via `useTableConfig()`** — no prop drilling for config values.
+- **New features use `TableFeatureFlags`** — features should be toggleable.
+- **Named exports only** — no default exports (except where required by dependencies).
+- **TypeScript strict mode** — no `any` in public APIs.
 
-### What Makes a Good PR
+## Code Style
 
-- **One concern per PR** — Don't mix bug fixes with features. Separate PRs are easier to review and safer to merge or revert.
-- **Compiles cleanly** — Run `npm run typecheck` before submitting. PRs that don't compile will not be reviewed.
-- **No breaking changes** — If your change alters the public API or exported types, discuss it in an issue first.
-- **Consistent style** — Match the existing code style. Don't reformat files you didn't change.
-- **Clear PR description** — Explain what problem you're solving and why your approach makes sense.
+- 2-space indentation
+- Functional components with hooks
+- Minimal dependencies — discuss in the issue before adding one
+- Match existing patterns — look at similar code before writing new code
 
-### Commit Messages
-
-Use clear, conventional commit messages:
+## Commit Messages
 
 ```
 fix: resolve config merging for instance-level overrides
@@ -104,43 +90,59 @@ Format: `<type>: <short description>`
 
 Types: `fix`, `feat`, `docs`, `refactor`, `test`, `chore`
 
-## Submitting a Pull Request
+## Pull Request Checklist
 
-1. Make sure your branch is up to date with `main`:
+Before submitting your PR, verify:
+
+- [ ] `npm run typecheck` passes with no errors
+- [ ] `npm run build` completes successfully
+- [ ] No `any` types in public-facing code
+- [ ] No breaking changes (or discussed and approved in an issue/RFC)
+- [ ] One concern per PR — don't mix bug fixes with features
+- [ ] PR description explains the problem and approach
+- [ ] Code matches existing architecture patterns
+- [ ] Includes a usage example if adding new API surface
+
+## Branch Naming
+
+```
+fix/config-merging-strategy
+feat/add-virtual-scrolling
+docs/update-router-examples
+refactor/simplify-pagination-logic
+test/add-config-merge-tests
+```
+
+## Submitting a PR
+
+1. Rebase on latest `main`:
 
 ```bash
 git fetch origin
 git rebase origin/main
 ```
 
-2. Run the type checker:
+2. Verify:
 
 ```bash
 npm run typecheck
-```
-
-3. Build the package to verify output:
-
-```bash
 npm run build
 ```
 
-4. Push your branch and open a PR against `main`.
-
-5. Fill in the PR template with:
-   - **Title** — What the PR does (e.g., "Fix config merging for instance overrides")
+3. Push and open a PR against `main` with:
+   - **Title** — What the PR does
    - **Problem** — What was wrong or missing
    - **Solution** — How you fixed it
    - **Testing** — How you verified it works
 
 ## Reporting Issues
 
-When opening an issue, include:
+Include:
 
-- A clear description of the problem
-- Steps to reproduce (minimal code example if possible)
-- Expected vs actual behavior
-- Your environment (React version, browser, OS)
+- Clear description of the problem
+- Steps to reproduce (minimal code example preferred)
+- Expected vs. actual behavior
+- Environment: React version, browser, OS
 
 ## Project Structure
 
@@ -148,12 +150,14 @@ When opening an issue, include:
 src/
   components/         React components (DataTable, Toolbar, Pagination, etc.)
     advanced/         Advanced filter components
+    client-side-table/ Client-side pagination wrapper
     ui/               Base UI components (Radix UI + Tailwind)
   config/             Configuration system (context, merging, defaults, hooks)
   hooks/              Shared hooks (translations, debounce)
   types/              TypeScript type definitions
   lib/                Utilities (cn, CSV export)
   index.ts            Public API barrel export
+rfcs/                 RFC proposals for major changes
 ```
 
 ## Need Help?
@@ -164,4 +168,4 @@ src/
 
 ## License
 
-By contributing to react-table-craft, you agree that your contributions will be licensed under the MIT License.
+By contributing, you agree that your contributions will be licensed under the MIT License.
